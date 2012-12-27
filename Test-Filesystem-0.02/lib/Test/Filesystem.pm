@@ -33,30 +33,31 @@ Test::Filesystem - Tester for filesystem content
 
 =head1 DESCRIPTION
 
-This test framework compare filesystems. You can use it your perl programs
-are generating filesystems parts and you don't want to compare file by file.
-
-In the current implementation we compare the following attributes:
+This test framework compare filesystems (content and meta attribute).
+You can use it if your perl program
+are generating files and you don't want to compare file by file.
 
 =head1 PUBLIC INTERFACE
 
 =over 4
 
-=item C<cmp_filesystem( {OPTIONS}, GOT, EXPECTED, NAME )>
+=item C<cmp_filesystem( {OPTIONS}, GOT_ROOT_DIR_PATH, EXPECTED_ROOT_DIR_PATH, NAME )>
 
 Compares the two given filesystems: C<GOT/> and C<EXPECTED/>. C<OPTIONS> are unsupported
 yet.
+
+In the current implementation we compare the following attributes:
 
 =over 4
 
 =item 1. files and directories
 
-    (location relative to the given root directory)
+Location relative to the given root directory. No symlinks or special files will be checked.
 
 =item 2. stat attributes
 
-C<stat()> attributes without C<dev>, C<ctime>, C<blksize>, C<blocks> and C<ino>
-inode number.
+C<stat()> attributes B<without> C<dev>, C<ctime>, C<blksize>, C<blocks> and C<ino>
+(inode number).
 
 =item 3. file content.
 
@@ -66,8 +67,6 @@ Doing the MD5 dance with every file.
 
 We're not checking the root directory itself, only the content of it. So if the
 mtime from C</a> and C</b> differs, it will checked.
-
-Special files are not handled (yet).
 
 =cut
 
@@ -530,5 +529,4 @@ sub files
 
     $self->{ files };
 }
-
 

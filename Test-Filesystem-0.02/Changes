@@ -1,5 +1,8 @@
 Revision history for Test-Filesystem
 
-0.01    Date/time
+0.02    2012-12-27
+        Update/corrected perlpod.
+
+0.01    2012-12-26
         First version, released on an unsuspecting world.
 
