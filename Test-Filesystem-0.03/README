@@ -1,7 +1,8 @@
 Test-Filesystem
 
-This test framework compare filesystems. You can use it your perl programs
-are generating filesystems parts and you don't want to compare file by file.
+This test framework compare filesystems (content and meta attribute).
+You can use it if your perl program is generating files and you don't
+want to compare the test results file by file.
 
 INSTALLATION
 

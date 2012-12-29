@@ -35,7 +35,7 @@ Test::Filesystem - Tester for filesystem content
 
 This test framework compare filesystems (content and meta attribute).
 You can use it if your perl program
-are generating files and you don't want to compare file by file.
+is generating files and you don't want to compare the test results file by file.
 
 =head1 PUBLIC INTERFACE
 
@@ -95,17 +95,17 @@ sub cmp_filesystem
     }
 
     my $diffs = $me->changed_files_structure( $other );
-    print_diagnostics( $name, $diffs ) || return 0;
+    _print_diagnostics( $name, $diffs ) || return 0;
 
     $diffs = $me->changed_files_content( $other );
-    print_diagnostics( $name, $diffs ) || return 0;
+    _print_diagnostics( $name, $diffs ) || return 0;
 
     $tb->ok( 1, $name );
 
     return 1;
 }
 
-sub print_diagnostics
+sub _print_diagnostics
 {
     my ( $name, $diffs ) = @_;
 
@@ -115,7 +115,7 @@ sub print_diagnostics
     {
         foreach my $diff ( @$diffs )
         {
-            $tb->diag( format_diagnostic_lines( $diff ) );
+            $tb->diag( _format_diagnostic_lines( $diff ) );
         }
         $tb->ok( 0, $name );
         return 0;
@@ -123,27 +123,17 @@ sub print_diagnostics
     return 1;
 }
 
-sub format_diagnostic_lines
+sub _format_diagnostic_lines
 {
     my $data = shift;
 
-    format_single_diagnostic_line( 'got',
+    _format_single_diagnostic_line( 'got',
         $data->{ file_a } . ': ' . $data->{ message_a } )
-      . format_single_diagnostic_line( 'expected',
+      . _format_single_diagnostic_line( 'expected',
         $data->{ file_b } . ': ' . $data->{ message_b } );
 }
 
-sub format_diagnostic_lines_
-{
-    my $data = shift;
-
-    format_single_diagnostic_line( 'got', $data->{ file_a } )
-      . format_single_diagnostic_line( 'got',      $data->{ message_a } )
-      . format_single_diagnostic_line( 'expected', $data->{ file_b } )
-      . format_single_diagnostic_line( 'expected', $data->{ message_b } );
-}
-
-sub format_single_diagnostic_line
+sub _format_single_diagnostic_line
 {
     my $key     = shift;
     my $message = shift;
